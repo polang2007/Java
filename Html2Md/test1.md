@@ -2,8 +2,7 @@
 
    
 **目录**
-   
-   修改
+
 <a>一、ThreadLocal简介</a>
    
 <a>二、ThreadLocal与Synchronized的区别</a>
