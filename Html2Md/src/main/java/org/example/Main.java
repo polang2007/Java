@@ -2,17 +2,12 @@ package org.example;
 
 import io.reactivex.rxjava3.subjects.BehaviorSubject;
 import org.example.file.FileWriter;
+import org.example.readability.AnalyzeByJSoup;
 import org.example.readability.GetContent;
 import org.example.readability.Readability;
 import org.example.replacerchain.Html2Md;
 import org.jsoup.Jsoup;
 import org.jsoup.safety.Safelist;
-
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
-import java.nio.charset.StandardCharsets;
 import java.util.Optional;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
@@ -28,10 +23,10 @@ public class Main {
         observeUrl.map(s -> RetrofitManager.getInstance().getBodyStrSync(s))
                 .filter(Optional::isPresent)
                 .map(Optional::get)
-                .map(GetContent::getContent)
+//                .map(GetContent::getContent)
+                .map(s ->  new AnalyzeByJSoup().parse(s).getString("id.content_views.0@all"))
                 .map(html -> UrlResolver.resolveUrlByJsoup(html, observeUrl.getValue()))
                 .map(s -> Jsoup.clean(s, Safelist.relaxed()))
-//                .map(s -> new AnalyzeByJSoup().parse(s).getElements("class.content book.0@class.bookbox"))
 //                .map(s -> Html2Md.getInstance().parse(observeUrl.getValue(), s))
                 .map(Html2Md::parse)
                 .subscribe(s -> FileWriter.writeToFile("test1.md", s.toString()));

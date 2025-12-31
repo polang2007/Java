@@ -1,4 +1,4 @@
-package org.example;
+package org.example.readability;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
 import org.jsoup.nodes.TextNode;
@@ -41,7 +41,7 @@ public class AnalyzeByJSoup {
     /**
      * 合并内容列表,得到内容
      */
-    String getString(String ruleStr) {
+    public String getString(String ruleStr) {
         if (isEmpty(ruleStr)) {
             return null;
         }
@@ -55,7 +55,7 @@ public class AnalyzeByJSoup {
     /**
      * 获取一个字符串
      **/
-    String getString0(String ruleStr) {
+    public String getString0(String ruleStr) {
         List<String> urlList = getStringList(ruleStr);
         if (!urlList.isEmpty()) {
             return urlList.get(0);
